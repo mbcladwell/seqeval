@@ -2,6 +2,7 @@
   (guix packages)
   ((guix licenses) #:prefix license:)
   (guix download)
+  (guix git-download)
   (guix build-system gnu)
   (gnu packages)
   (gnu packages autotools)
@@ -19,7 +20,7 @@
                 (method git-fetch)
                 (uri (git-reference
                       (url "git://github.com/mbcladwell/seqeval.git")
-                      (commit "18a88fb0ca871ae3bab693f9fb384328f90c8844")))
+                      (commit "2533a315b9208a394236b512c48de9999c33f146")))
                 (sha256 (base32 "0zq216apqdb3d97vprr7z5hl66ab4al95iavsr14n32p2954sfw2"))
                ;; (file-name (git-file-name name version))
 		))
