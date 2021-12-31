@@ -1,0 +1,90 @@
+library("seqinr")
+library("shiny")
+
+
+ui <- fluidPage(
+  title = "Eval Seqs",
+
+  titlePanel("Evaluate sequence quality"),
+  sidebarLayout(
+      sidebarPanel(
+                
+          helpText("Select multifasta formatted files to analyze:"),
+          fileInput("file1", label = h3("Forward multifasta")),
+          fileInput("file2", label = h3("Reverse multifasta")),
+          downloadButton('downloadF', 'Download example Forward multifasta'),
+          downloadButton('downloadR', 'Download example Reverse multifasta'),
+      h5("Discussion at ", a("stihie.bit", href="https://www.labsolns.com/software/seqeval/"))),
+      
+    mainPanel(
+
+        h1("Ambiguity count vs. nucleotide index"),
+        h4("Forward read in black"),
+        h4("Reverse read in red", style= "color:red"),
+        
+      plotOutput( "plot1" )       
+    )       
+  )
+)
+
+
+
+server <- function(input, output) {
+  nbsum1 <-  reactive({
+    if(!is.null(input$file1)){
+      infile <- input$file1
+      sqf <- read.fasta( infile$datapath)
+      nbsum <- vector( mode="integer", length=2000)
+      for( i in 1:length(sqf)){
+        for( j in 1:length( getSequence(sqf[[i]]))){
+          if( getSequence(sqf[[i]])[j] == "n") nbsum[j] <- nbsum[j] + 1
+        } }
+      nbsum
+    } }) 
+  nbsum2 <-  reactive({
+    if(!is.null(input$file2)){
+      infile <- input$file2
+      sqf <- read.fasta( infile$datapath)
+      nbsum <- vector( mode="integer", length=2000)      
+      for( i in 1:length(sqf)){
+        for( j in 1:length( getSequence(sqf[[i]]))){
+          if( getSequence(sqf[[i]])[j] == "n") nbsum[j] <- nbsum[j] + 1
+        }}
+      nbsum
+    }})
+  output$downloadF <- downloadHandler(
+      filename <- function() {
+          paste("forward", "txt", sep=".")
+      },
+      content <- function(file) {
+          file.copy("abcdefgh/forward.txt", file)      })    
+
+  output$downloadR <- downloadHandler(
+      filename <- function() {
+          paste("reverse", "txt", sep=".")
+      },
+      content <- function(file) {
+          file.copy("abcdefgh/reverse.txt", file)
+      })    
+  output$plot1 <- renderPlot({
+      #input$action
+      nbsumf <- nbsum1()
+    nbsumr <- nbsum2()
+    x <- 1:1200
+    if ( (!is.null(nbsumf))&(!is.null(nbsumr))){
+        plot(nbsumf[x], xlab="Nucleotide Index", ylab="Count")
+        points(nbsumr[x], col="red")
+    }else{
+        if(!is.null(nbsumf)){
+             plot(nbsumf[x], xlab="Nucleotide Index", ylab="Count")
+         }else{
+             if(!is.null(nbsumr)){
+                 plot(nbsumr[x], xlab="Nucleotide Index", ylab="Count", col="red")
+                 }
+        }
+    } 
+  })  
+}
+
+app <- shinyApp(ui = ui, server = server)
+runApp(app, host="0.0.0.0", port=3301)
