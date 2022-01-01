@@ -50,6 +50,7 @@
 				(add-before 'install 'copy-seqs
 						    (lambda* (#:key outputs #:allow-other-keys)
 						      (let* ((out  (assoc-ref outputs "out"))
+							     (install-file "./reverse.txt" out)
 							     )            				       
 							(install-file "./forward.txt" out)
 							#t)))

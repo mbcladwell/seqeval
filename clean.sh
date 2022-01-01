@@ -23,7 +23,7 @@ cp /home/mbc/syncd/tobedeleted/seqeval/*.txt .
 make dist
 
 git add .
-git commit -am "changes"
+git commit -a -S -m "changes for server"
 git push
 
 ##scp -i /home/mbc/labsolns.pem ./shinyln-0.1.tar.gz admin@ec2-18-189-31-114.us-east-2.compute.amazonaws.com:.
