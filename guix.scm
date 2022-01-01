@@ -20,8 +20,8 @@
                 (method git-fetch)
                 (uri (git-reference
                       (url "git://github.com/mbcladwell/seqeval.git")
-                      (commit "2533a315b9208a394236b512c48de9999c33f146")))
-                (sha256 (base32 "0zq216apqdb3d97vprr7z5hl66ab4al95iavsr14n32p2954sfw2"))
+                      (commit "772353a269021e8dc9daf393134d698c5d5f5e0a")))
+                (sha256 (base32 "14b5qh85ydxn71igh0ng57czvg9afhpihnppwqgd4n3yh63ymxi7"))
                ;; (file-name (git-file-name name version))
 		))
 
@@ -42,7 +42,8 @@
 					(add-before 'install 'copy-executable
 						    (lambda* (#:key outputs #:allow-other-keys)
 						      (let* ((out  (assoc-ref outputs "out"))
-							     (bin-dir (string-append out "/bin"))	    							     
+							     (bin-dir (string-append out "/bin"))
+	    						    
 							     )            				       
 							(install-file "scripts/seqeval.sh" bin-dir)
 							#t)))
@@ -50,7 +51,7 @@
 						    (lambda* (#:key outputs #:allow-other-keys)
 						      (let* ((out  (assoc-ref outputs "out"))
 							     )            				       
-							(install-file "./*.txt" out)
+							(install-file "./forward.txt" out)
 							#t)))
 					(add-after 'install 'wrap-seqeval
 						   (lambda* (#:key inputs outputs #:allow-other-keys)
