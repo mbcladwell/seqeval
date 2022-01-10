@@ -14,7 +14,7 @@ ui <- fluidPage(
           fileInput("file2", label = h3("Reverse multifasta")),
           downloadButton('downloadF', 'Download example Forward multifasta'),
           downloadButton('downloadR', 'Download example Reverse multifasta'),
-      h5("Discussion at ", a("labsolns.com", href="https://www.labsolns.com/software/seqeval/"))),
+      h5("Discussion at ", shiny::a("labsolns.com", href="https://www.labsolns.com/software/seqeval/"))),
       
     mainPanel(
 

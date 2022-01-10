@@ -20,8 +20,8 @@
                 (method git-fetch)
                 (uri (git-reference
                       (url "git://github.com/mbcladwell/seqeval.git")
-                      (commit "772353a269021e8dc9daf393134d698c5d5f5e0a")))
-                (sha256 (base32 "14b5qh85ydxn71igh0ng57czvg9afhpihnppwqgd4n3yh63ymxi7"))
+                      (commit "1e8fc869109f0705795c92f4aac5054c0fabd29a")))
+                (sha256 (base32 "0qn85c11r6x8kxmwm5rinw1fjbv82vmanfp2gl2a7c4sb4mzjlmn"))
                ;; (file-name (git-file-name name version))
 		))
 
@@ -50,7 +50,7 @@
 				(add-before 'install 'copy-seqs
 						    (lambda* (#:key outputs #:allow-other-keys)
 						      (let* ((out  (assoc-ref outputs "out"))
-							     (install-file "./reverse.txt" out)
+							     (dummy(install-file "./reverse.txt" out))
 							     )            				       
 							(install-file "./forward.txt" out)
 							#t)))
